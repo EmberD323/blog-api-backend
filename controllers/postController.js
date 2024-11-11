@@ -1,7 +1,7 @@
 const db = require("../prisma/queries.js");
 const { body, validationResult } = require("express-validator");
 
-//sign up validation and handling
+//post form validation and handling
 const validatePost= [
     body("title").trim()
       .escape()
@@ -10,11 +10,12 @@ const validatePost= [
         .escape()
         .isLength({ min: 1 }).withMessage(`Text must contain text`),
 ];
+
+
 async function allPostsGet (req, res) {
-    const posts = await db.findAllPosts(req.params.folderName,req.user);
+    const posts = await db.findAllPosts();
     res.json(posts);
 }
-
 newPostCreate = [
     validatePost,
     async function newPostCreate (req, res) {
@@ -22,7 +23,7 @@ newPostCreate = [
         if (!errors.isEmpty()) {
             return res.status(400).json(errors.array())
         }
-        //temp
+        //temp todo:update
         const userid=1;
         const {title,text} = req.body
         await db.createPost(title,text,userid)
@@ -30,6 +31,12 @@ newPostCreate = [
     }
 ]
 async function singlePostGet (req, res) {
+    const postid = Number(req.params.postid);
+    const post = await db.findPost(postid);
+    if (post == null){
+        return res.status(404).json({error:'Post does not exist'})
+    }
+    res.json(post);
 }
 async function postUpdate (req, res) {
 }

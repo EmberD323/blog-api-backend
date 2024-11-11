@@ -62,6 +62,17 @@ async function createPost(title,text) {
         }})
     return 
 }
+async function findPost(id) {
+    const post = await prisma.post.findUnique({
+        include: {
+            comments: true,
+          },
+        where: {
+          id
+        },
+    })
+    return post
+}
 
 
 module.exports = {
@@ -69,5 +80,6 @@ module.exports = {
     createPost,
     createUser,
     findAllUsers,
-    findUser
+    findUser,
+    findPost
 }

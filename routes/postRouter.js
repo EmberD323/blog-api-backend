@@ -11,7 +11,7 @@ const commentController = require("../controllers/commentController");
 postRouter.get("/", postController.allPostsGet);//done
 postRouter.post("/", postController.newPostCreate);//done
 
-postRouter.get("/:postid", postController.singlePostGet);
+postRouter.get("/:postid", postController.singlePostGet);//done
 postRouter.put("/:postid", postController.postUpdate);
 postRouter.delete("/:postid", postController.postDelete);
 
