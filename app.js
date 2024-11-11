@@ -6,7 +6,10 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 //routes
 const indexRouter = require("./routes/indexRouter");
+const postRouter = require("./routes/postRouter");
+
 app.use("/", indexRouter);
+app.use("/posts", postRouter);
 
 
 
