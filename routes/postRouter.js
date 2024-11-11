@@ -15,12 +15,12 @@ postRouter.get("/:postid", postController.singlePostGet);//done
 postRouter.put("/:postid", postController.postUpdate);//done
 postRouter.delete("/:postid", postController.postDelete);//done
 
-postRouter.get("/:postid/comments", commentController.allCommentsGet);
-postRouter.post("/:postid/comments", commentController.newCommentCreate);
+postRouter.get("/:postid/comments", commentController.allCommentsGet);//done
+postRouter.post("/:postid/comments", commentController.newCommentCreate);//done
 
-postRouter.get("/:postid/comments/:commentid", commentController.singleCommentGet);
-postRouter.put("/:postid/:commentid", commentController.commentUpdate);
-postRouter.delete("/:postid/:commentid", commentController.commentDelete);
+postRouter.get("/:postid/comments/:commentid", commentController.singleCommentGet);//done
+postRouter.put("/:postid/comments/:commentid", commentController.commentUpdate);//done
+postRouter.delete("/:postid/comments/:commentid", commentController.commentDelete);//done
 
 
 

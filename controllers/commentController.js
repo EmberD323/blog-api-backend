@@ -30,19 +30,60 @@ newCommentCreate = [
         }
         //temp todo:update
         const userid=1;
-        console.log(postid)
         const {text} = req.body
-        console.log(req.body)
         await db.createComment(text,postid,userid);
         res.redirect("/posts/"+postid+"/comments")
     }
 ]
-
 async function singleCommentGet (req, res) {
+    const postid = Number(req.params.postid);
+    const post = await db.findPost(postid);
+    if (post == null){
+        return res.status(404).json({error:'Post does not exist'})
+    }
+    const commentid = Number(req.params.commentid);
+    const comment = await db.findComment(commentid,postid);
+    if (comment == null){
+        return res.status(404).json({error:'Comment does not exist'})
+    }
+    res.json(comment);
+
 }
-async function commentUpdate (req, res) {
-}
+commentUpdate =[
+    validateComment,
+    async function (req, res) {
+        const postid = Number(req.params.postid);
+        const post = await db.findPost(postid);
+        if (post == null){
+            return res.status(404).json({error:'Post does not exist'})
+        }
+        const commentid = Number(req.params.commentid);
+        const comment = await db.findComment(commentid,postid);
+        if (comment == null){
+            return res.status(404).json({error:'Comment does not exist'})
+        }
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json(errors.array())
+        }
+        const {text} = req.body;
+        await db.udpateComment(text,commentid);
+        res.redirect("/posts/"+postid+"/comments");
+    }
+]
 async function commentDelete (req, res) {
+    const postid = Number(req.params.postid);
+    const post = await db.findPost(postid);
+    if (post == null){
+        return res.status(404).json({error:'Post does not exist'})
+    }
+    const commentid = Number(req.params.commentid);
+    const comment = await db.findComment(commentid,postid);
+    if (comment == null){
+        return res.status(404).json({error:'Comment does not exist'})
+    }
+    await db.deleteComment(commentid);
+    res.redirect("/posts/"+postid+"/comments")
 }
 
 module.exports = {

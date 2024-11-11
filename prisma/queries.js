@@ -113,6 +113,34 @@ async function createComment(text,postid,userid) {
         }})
     return 
 }
+async function findComment(id,postId) {
+    const comment = await prisma.comment.findUnique({
+        where: {
+          id,
+          postId
+        },
+    })
+    return comment
+}
+
+async function udpateComment(text,id) {
+    await prisma.comment.update({
+        where: {
+            id,
+        },
+        data: {
+            text,
+        }
+      })
+    return
+}
+async function deleteComment(id) {
+    await prisma.comment.delete({
+       where: {
+         id,
+       },
+   })
+}
 module.exports = {
     findAllPosts,
     createPost,
@@ -123,5 +151,8 @@ module.exports = {
     udpatePost,
     deletePost,
     findAllComments,
-    createComment
+    createComment,
+    findComment,
+    udpateComment,
+    deleteComment
 }
