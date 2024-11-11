@@ -12,8 +12,8 @@ postRouter.get("/", postController.allPostsGet);//done
 postRouter.post("/", postController.newPostCreate);//done
 
 postRouter.get("/:postid", postController.singlePostGet);//done
-postRouter.put("/:postid", postController.postUpdate);
-postRouter.delete("/:postid", postController.postDelete);
+postRouter.put("/:postid", postController.postUpdate);//done
+postRouter.delete("/:postid", postController.postDelete);//done
 
 postRouter.get("/:postid/comments", commentController.allCommentsGet);
 postRouter.post("/:postid/comments", commentController.newCommentCreate);

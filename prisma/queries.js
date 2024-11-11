@@ -53,12 +53,13 @@ async function findAllPosts() {
     return posts
 }
 
-async function createPost(title,text) {
+async function createPost(title,text,publish,userId) {
     await prisma.post.create({
         data: {
             title,
             text,
-            userId:1
+            published:publish,
+            userId:userId
         }})
     return 
 }
@@ -73,13 +74,54 @@ async function findPost(id) {
     })
     return post
 }
+async function udpatePost(title,text,publish,id) {
+    await prisma.post.update({
+        where: {
+            id,
+        },
+        data: {
+            title,
+            text,
+            published:publish
+        }
+      })
+    return
+}
 
-
+async function deletePost(id) {
+    await prisma.post.delete({
+       where: {
+         id,
+       },
+   })
+}
+//comments
+async function findAllComments(postid) {
+    const comments = await prisma.comment.findMany({
+        where: {
+          postId:postid
+        },
+    })
+    return comments
+}
+async function createComment(text,postid,userid) {
+    await prisma.comment.create({
+        data: {
+            text,
+            userId:userid,
+            postId:postid
+        }})
+    return 
+}
 module.exports = {
     findAllPosts,
     createPost,
     createUser,
     findAllUsers,
     findUser,
-    findPost
+    findPost,
+    udpatePost,
+    deletePost,
+    findAllComments,
+    createComment
 }
