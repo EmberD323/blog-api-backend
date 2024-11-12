@@ -2,6 +2,7 @@ const db = require("../prisma/queries.js");
 const bcrypt = require("bcryptjs");
 const tools = require("./modules/tools.js");
 const { body, validationResult } = require("express-validator");
+const jwt = require("jsonwebtoken");
 
 const validateSignUp= [
     body("first_name").trim()
@@ -70,12 +71,17 @@ logIn = [
       if(result == false){
         const error = {msg:'Incorrect password'}
         return res.json(error)
+        
       }
       else{
-        res.json("logged in")
+        jwt.sign({user},'lemons',(err,token)=>{
+          //save token to do
+          res.json({
+            token
+          });
+        });
       }
     })
-   
   }
 
 
