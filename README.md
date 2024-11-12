@@ -22,7 +22,6 @@ PostgreSQL
 bcryptjs
 prisma
 \c
-
-
 steps:
-continue post router
+figure out jwt sign up and log in
+use token for edit posts, create posts,delete posts

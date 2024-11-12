@@ -1,24 +1,14 @@
 const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 
-// async function createUser(username,firstName,lastName,password) {
-//     await prisma.user.create({
-//         data: {
-//             username: username,
-//             first_name:firstName,
-//             last_name:lastName,
-//             password: password
-//         }})
-//     return 
-// }
-//users
+
 async function findAllUsers() {
-    const posts = await prisma.user.findMany({
+    const users = await prisma.user.findMany({
         include: {
             posts: true,
         }
     })
-    return posts
+    return users
 }
 
 async function findUser(id) {
@@ -33,15 +23,36 @@ async function findUser(id) {
     return user
 }
 
-async function createUser(first_name,last_name,username,password) {
+async function findUserByUsername(username) {
+    const user = await prisma.user.findUnique({
+        include: {
+            posts: true,
+        },
+        where: {
+          username,
+        },
+    })
+    return user
+}
+async function createUser(first_name,last_name,username,password,author) {
     await prisma.user.create({
         data: {
             first_name,
             last_name,
             username,
             password,
+            author
         }})
+    const users = await prisma.user.findMany({
+        include: {
+            posts: true,
+        }
+    })
+    console.log(users)
     return 
+}
+async function deleteAllUsers() {
+    await prisma.user.deleteMany()
 }
 //posts
 async function findAllPosts() {
@@ -95,6 +106,9 @@ async function deletePost(id) {
        },
    })
 }
+async function deleteAllPosts() {
+    await prisma.post.deleteMany()
+}
 //comments
 async function findAllComments(postid) {
     const comments = await prisma.comment.findMany({
@@ -141,18 +155,25 @@ async function deleteComment(id) {
        },
    })
 }
+async function deleteAllComments () {
+    await prisma.comment.deleteMany()
+}
 module.exports = {
     findAllPosts,
     createPost,
     createUser,
     findAllUsers,
     findUser,
+    findUserByUsername,
+    deleteAllUsers,
     findPost,
     udpatePost,
     deletePost,
+    deleteAllPosts,
     findAllComments,
     createComment,
     findComment,
     udpateComment,
-    deleteComment
+    deleteComment,
+    deleteAllComments
 }
