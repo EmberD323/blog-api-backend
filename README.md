@@ -24,6 +24,12 @@ prisma
 jwt
 passport-jwt
 \c
-steps:
-figure out jwt sign up and log in
-use token for edit posts, create posts,delete posts
+
+stuck:
+need to add jwt token to storage.
+next steps:
+1)branch - done
+2)remove passport and sessions
+3) authenticate myself
+4) use jwt
+5) add to storage somehow

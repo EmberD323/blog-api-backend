@@ -1,85 +1,8 @@
 require("dotenv").config();
-//express
 const express = require("express");
-const session = require("express-session");
-const passport = require("passport");
-const bcrypt = require("bcryptjs");
-const LocalStrategy = require('passport-local').Strategy;
-const { PrismaClient } = require('@prisma/client')
-const { PrismaSessionStore } = require('@quixo3/prisma-session-store');
-const prisma = new PrismaClient()
 const app = express();
-
-app.use(session({
-  cookie: {
-   maxAge: 5 * 60 * 1000 // ms
-  },
-  secret: 'a santa at nasa',
-  resave: true,
-  saveUninitialized: true,
-  store: new PrismaSessionStore(
-    new PrismaClient(),
-    {
-      checkPeriod: 60 * 1000,  //ms
-      dbRecordIdIsSessionId: true,
-      dbRecordIdFunction: undefined,
-    }
-  )
-}));
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(express.urlencoded({ extended: true }));
-//setting up the LocalStrategy
-passport.use(
-    new LocalStrategy(async (username, password, done) => {
-      try {
-        const user = await prisma.user.findUnique({
-          where: {
-            username: username,
-          },
-        })
-  
-        if (!user) {
-          return done(null, false, { message: "Incorrect email" });
-        }
-        const match = await bcrypt.compare(password, user.password);
-        if (!match) {
-        // passwords do not match!
-        return done(null, false, { message: "Incorrect password" })
-        }
-        return done(null, user);
-      } catch(err) {
-        return done(err);
-      }
-    })
-);
-//sessions and serialization
-passport.serializeUser((user, done) => {
-  done(null, user.id);
-});  
-passport.deserializeUser(async (id, done) => {
-  try {
-    
-    const user = await prisma.user.findUnique({
-      where: {
-        id: id,
-      },
-    })
 
-    done(null, user);
-  } catch(err) {
-    done(err);
-  }
-});
-//current user set local
-app.use((req, res, next) => {
-  res.locals.currentUser = req.user;
-  next();
-});
-app.use((err, req, res, next) => {
-  console.error(err);
-  res.status(500).send(err);
-});
 //routes
 const indexRouter = require("./routes/indexRouter");
 const postRouter = require("./routes/postRouter");
@@ -91,7 +14,7 @@ const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`My first Express app - listening on port ${PORT}!`);
 });
-
+//errors
 app.use((err, req, res, next) => {
     console.error(err);
     res.status(500).send(err);
