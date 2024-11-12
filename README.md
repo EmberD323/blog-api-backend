@@ -29,7 +29,7 @@ stuck:
 need to add jwt token to storage.
 next steps:
 1)branch - done
-2)remove passport and sessions
-3) authenticate myself
+2)remove passport and sessions - done
+3) authenticate myself -done
 4) use jwt
 5) add to storage somehow

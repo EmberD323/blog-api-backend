@@ -4,11 +4,7 @@ const userController = require("../controllers/userController");
 
 
 indexRouter.post("/signup", userController.newUserCreate);
-indexRouter.post('/login',
-    function(req, res) {
-        res.json("logged in")
-    }
-);
+indexRouter.post('/login', userController.logIn);
 //logout
 indexRouter.get("/logout", (req, res, next) => {
     res.json("logged out")

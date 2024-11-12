@@ -28,6 +28,17 @@ const validateSignUp= [
       }).withMessage(`Passwords must match.`),
     body("author").isBoolean().withMessage(`Response must be true or false`),
 ];
+const validateLogIn= [
+  body("username")
+      .isEmail().withMessage(`Username must be a valid email`)
+      .custom(async value => {
+    const user = await db.findUserByUsername(value);
+    if (!user) {
+      throw new Error('E-mail doesnt exist');
+    }
+  })
+
+];
 newUserCreate = [
     validateSignUp,
     async function(req, res) {
@@ -41,12 +52,36 @@ newUserCreate = [
             }
             await db.createUser(tools.capitalize(first_name),tools.capitalize(last_name),username,hashedPassword,Boolean(author));
             res.redirect("/login")
-          });
+        });
     }
 ]
 
+logIn = [
+  validateLogIn,
+  async function(req, res) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.json({
+          errors: errors.array()
+      });
+    }
+    const user = await db.findUserByUsername(req.body.username);
+    bcrypt.compare(req.body.password, user.password, async (err,result) => {
+      if(result == false){
+        const error = {msg:'Incorrect password'}
+        return res.json(error)
+      }
+      else{
+        res.json("logged in")
+      }
+    })
+   
+  }
 
+
+]
 
 module.exports = {
     newUserCreate,
+    logIn
 };
