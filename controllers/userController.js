@@ -1,5 +1,4 @@
 const db = require("../prisma/queries.js");
-const jwt = require('jsonwebtoken');
 const bcrypt = require("bcryptjs");
 const tools = require("./modules/tools.js");
 const { body, validationResult } = require("express-validator");
@@ -46,12 +45,8 @@ newUserCreate = [
     }
 ]
 
-async function userGet (req, res) {
-    //mock user - after authentication - when you get the 
-  
-}
+
 
 module.exports = {
     newUserCreate,
-    userGet
 };

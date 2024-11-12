@@ -21,6 +21,8 @@ express validator const { body, validationResult } = require("express-validator"
 PostgreSQL
 bcryptjs
 prisma
+jwt
+passport-jwt
 \c
 steps:
 figure out jwt sign up and log in

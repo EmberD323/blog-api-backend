@@ -24,14 +24,13 @@ async function findUser(id) {
 }
 
 async function findUserByUsername(username) {
+    console.log(username)
     const user = await prisma.user.findUnique({
-        include: {
-            posts: true,
-        },
         where: {
           username,
         },
     })
+    console.log(user)
     return user
 }
 async function createUser(first_name,last_name,username,password,author) {
