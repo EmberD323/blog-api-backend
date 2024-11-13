@@ -26,8 +26,7 @@ passport-jwt
 \c
 
 next steps:
-1) go through roots and figure out which ones need to be protected & protect
-2) make sure userid updated in controller
+1) how does backend speak to front end? apparently fetch but fetch from where?
 
 onfront end:
 log in storage

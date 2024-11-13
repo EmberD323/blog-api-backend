@@ -4,6 +4,7 @@
   "description": "To build a backend for two different front-ends for accessing and editing blog posts",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
