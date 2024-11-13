@@ -25,11 +25,10 @@ jwt
 passport-jwt
 \c
 
-stuck:
-need to add jwt token to storage.
 next steps:
-1)branch - done
-2)remove passport and sessions - done
-3) authenticate myself -done
-4) use jwt
-5) add to storage somehow
+1) go through roots and figure out which ones need to be protected & protect
+2) make sure userid updated in controller
+
+onfront end:
+log in storage
+lout out

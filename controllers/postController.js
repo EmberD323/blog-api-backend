@@ -1,5 +1,7 @@
 const db = require("../prisma/queries.js");
 const { body, validationResult } = require("express-validator");
+const jwt = require("jsonwebtoken");
+
 
 //post form validation and handling
 const validatePost= [
@@ -18,17 +20,24 @@ async function allPostsGet (req, res) {
 newPostCreate = [
     validatePost,
     async function (req, res) {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json(errors.array())
-        }
-        //temp todo:update
-        const userid=1;
-        const {title,text,publish} = req.body
-        await db.createPost(title,text,Boolean(publish),userid)
-        res.redirect("/posts")
+        jwt.verify(req.token,'lemons',async (err,authData)=>{
+            if(err){
+                res.sendStatus(403)
+            }else{
+                const errors = validationResult(req);
+                if (!errors.isEmpty()) {
+                    return res.status(400).json(errors.array())
+                }
+                const user = authData.user;
+                const {title,text,publish} = req.body
+                await db.createPost(title,text,Boolean(publish),user.id)
+                res.sendStatus(200);
+            }
+            
+        })
     }
 ]
+
 async function singlePostGet (req, res) {
     const postid = Number(req.params.postid);
     const post = await db.findPost(postid);
@@ -41,25 +50,38 @@ async function singlePostGet (req, res) {
 postUpdate =[
     validatePost,
     async function (req, res) {
-        const postid = Number(req.params.postid);
-        const post = await db.findPost(postid);
-        if (post == null){
-            return res.status(404).json({error:'Post does not exist'})
-        }
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) {
-            return res.status(400).json(errors.array())
-        }
-        const {title,text,publish} = req.body;
-        await db.udpatePost(title,text,Boolean(publish),postid);
-        res.redirect("/posts");
+        jwt.verify(req.token,'lemons',async (err,authData)=>{
+            if(err){
+                res.sendStatus(403)
+            }else{
+                const postid = Number(req.params.postid);
+                const post = await db.findPost(postid);
+                if (post == null){
+                    return res.status(404).json({error:'Post does not exist'})
+                }
+                const errors = validationResult(req);
+                if (!errors.isEmpty()) {
+                    return res.status(400).json(errors.array())
+                }
+                const {title,text,publish} = req.body;
+                await db.udpatePost(title,text,Boolean(publish),postid);
+                res.sendStatus(200);
+            }
+        })
     }
 ]
 
 async function postDelete (req, res) {
-    const postid = Number(req.params.postid);
-    await db.deletePost(postid);
-    res.redirect("/posts")
+    jwt.verify(req.token,'lemons',async (err,authData)=>{
+        if(err){
+            res.sendStatus(403)
+        }else{
+            const postid = Number(req.params.postid);
+            await db.deletePost(postid);
+            res.sendStatus(200);
+        }
+    })
+    
 }
 
 

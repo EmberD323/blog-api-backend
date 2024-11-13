@@ -52,7 +52,7 @@ newUserCreate = [
                 });
             }
             await db.createUser(tools.capitalize(first_name),tools.capitalize(last_name),username,hashedPassword,Boolean(author));
-            res.redirect("/login")
+            res.sendStatus(200);
         });
     }
 ]
@@ -75,15 +75,14 @@ logIn = [
       }
       else{
         jwt.sign({user},'lemons',(err,token)=>{
-          //save token to do
+          //save token to  local storage - todo
           res.json({
-            token
+              token
           });
         });
       }
     })
   }
-
 
 ]
 
