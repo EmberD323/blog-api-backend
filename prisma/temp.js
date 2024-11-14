@@ -7,17 +7,19 @@ async function main() {
     //await prisma.comment.deleteMany()
     //await prisma.post.deleteMany()
     //await prisma.user.deleteMany()
-    await prisma.user.deleteMany({
-      where: {
-          username:"baileyelmaleh1@gmail.com",
-      }
-  })
+  //   await prisma.user.deleteMany({
+  //     where: {
+  //         username:"baileyelmaleh1@gmail.com",
+  //     }
+  // })
 //   const users = await prisma.user.findMany({
 //     include: {
 //         posts: true,
 //     }
 // })
 // console.log(users) 
+    const posts =await prisma.post.findMany()
+    console.log(posts)
 }
 
 

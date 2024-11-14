@@ -57,14 +57,19 @@ postUpdate =[
                 const postid = Number(req.params.postid);
                 const post = await db.findPost(postid);
                 if (post == null){
-                    return res.status(404).json({error:'Post does not exist'})
+                    return res.status(400).json({error:'Post does not exist'})
                 }
                 const errors = validationResult(req);
                 if (!errors.isEmpty()) {
                     return res.status(400).json(errors.array())
                 }
-                const {title,text,publish} = req.body;
-                await db.udpatePost(title,text,Boolean(publish),postid);
+                let {title,text,publish} = req.body;
+                if(publish == "true"){
+                    publish = true;
+                  }else{
+                    publish = false;
+                  }
+                await db.udpatePost(title,text,publish,postid);
                 res.sendStatus(200);
             }
         })
