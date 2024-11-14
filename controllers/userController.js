@@ -66,8 +66,7 @@ logIn = [
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({
-          errors: errors.array(),
-          body: req.body
+          errors: errors.array()
       });
     }
     const user = await db.findUserByUsername(req.body.username);
@@ -81,7 +80,7 @@ logIn = [
         jwt.sign({user},'lemons',(err,token)=>{
           //save token to  local storage - todo
           res.json({
-              token
+              token,user
           });
         });
       }
