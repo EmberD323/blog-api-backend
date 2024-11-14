@@ -43,8 +43,7 @@ const validateLogIn= [
 newUserCreate = [
     validateSignUp,
     async function(req, res) {
-        console.log(req.body)
-        const {first_name,last_name,username,password,passwordConfirm,author} = req.body
+        let {first_name,last_name,username,password,passwordConfirm,author} = req.body
         bcrypt.hash(password, 10, async (err, hashedPassword) => {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
@@ -54,9 +53,11 @@ newUserCreate = [
                     
                 });
             }
-            console.log(author)
-            console.log(typeof author)
-            if(author == "true"){author = true}else{author = false};
+            if(author == "true"){
+              author = true;
+            }else{
+              author = false;
+            }
             await db.createUser(tools.capitalize(first_name),tools.capitalize(last_name),username,hashedPassword,author);
             res.sendStatus(200);
         });
