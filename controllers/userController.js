@@ -56,7 +56,8 @@ newUserCreate = [
             }
             console.log(author)
             console.log(typeof author)
-            await db.createUser(tools.capitalize(first_name),tools.capitalize(last_name),username,hashedPassword,Boolean(author));
+            if(author == "true"){author = true}else{author = false};
+            await db.createUser(tools.capitalize(first_name),tools.capitalize(last_name),username,hashedPassword,author);
             res.sendStatus(200);
         });
     }
