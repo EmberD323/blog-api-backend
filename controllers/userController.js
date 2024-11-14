@@ -43,6 +43,7 @@ const validateLogIn= [
 newUserCreate = [
     validateSignUp,
     async function(req, res) {
+        console.log(req)
         const {first_name,last_name,username,password,passwordConfirm,author} = req.body
         bcrypt.hash(password, 10, async (err, hashedPassword) => {
             const errors = validationResult(req);
