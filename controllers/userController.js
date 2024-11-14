@@ -48,9 +48,10 @@ newUserCreate = [
         bcrypt.hash(password, 10, async (err, hashedPassword) => {
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
-                return res.json({
+                return res.status(400).json({
                     errors: errors.array(),
                     body: req.body
+                    
                 });
             }
             await db.createUser(tools.capitalize(first_name),tools.capitalize(last_name),username,hashedPassword,Boolean(author));
