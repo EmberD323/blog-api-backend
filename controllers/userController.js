@@ -49,7 +49,7 @@ newUserCreate = [
             if (!errors.isEmpty()) {
                 return res.json({
                     errors: errors.array(),
-                    req: req
+                    body: req.body
                 });
             }
             await db.createUser(tools.capitalize(first_name),tools.capitalize(last_name),username,hashedPassword,Boolean(author));
