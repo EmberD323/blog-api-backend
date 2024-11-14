@@ -32,6 +32,9 @@ async function findUserByUsername(username) {
     return user
 }
 async function createUser(first_name,last_name,username,password,author) {
+    console.log(author)
+    console.log(typeof author)
+
     await prisma.user.create({
         data: {
             first_name,
