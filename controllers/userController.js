@@ -65,7 +65,7 @@ logIn = [
   async function(req, res) {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.json({
+      return res.status(400).json({
           errors: errors.array(),
           body: req.body
       });
@@ -73,8 +73,8 @@ logIn = [
     const user = await db.findUserByUsername(req.body.username);
     bcrypt.compare(req.body.password, user.password, async (err,result) => {
       if(result == false){
-        const error = {msg:'Incorrect password'}
-        return res.json(error)
+        const errors = {msg:'Incorrect password'}
+        return res.status(400).json(errors)
         
       }
       else{
