@@ -63,7 +63,8 @@ logIn = [
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.json({
-          errors: errors.array()
+          errors: errors.array(),
+          body: req.body
       });
     }
     const user = await db.findUserByUsername(req.body.username);
