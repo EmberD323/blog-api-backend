@@ -48,7 +48,8 @@ newUserCreate = [
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
                 return res.json({
-                    errors: errors.array()
+                    errors: errors.array(),
+                    body: req.body
                 });
             }
             await db.createUser(tools.capitalize(first_name),tools.capitalize(last_name),username,hashedPassword,Boolean(author));
