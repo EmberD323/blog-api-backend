@@ -73,7 +73,7 @@ logIn = [
     const user = await db.findUserByUsername(req.body.username);
     bcrypt.compare(req.body.password, user.password, async (err,result) => {
       if(result == false){
-        const errors = {msg:'Incorrect password'}
+        const errors = {errors:{msg:'Incorrect password'}}
         return res.status(400).json(errors)
         
       }
