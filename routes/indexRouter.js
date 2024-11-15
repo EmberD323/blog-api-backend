@@ -11,7 +11,7 @@ indexRouter.get("/logout", (req, res, next) => {
     //finish on front end
     res.json("logged out")
 });
-indexRouter.post('/users', userController.getAllUsers);
+indexRouter.get('/users', userController.getAllUsers);
 indexRouter.get("/",verifyToken, function (req, res) {
     res.redirect("/posts");
 })
