@@ -92,8 +92,12 @@ logIn = [
   }
 
 ]
-
+async function getAllUsers (req, res) {
+  const users = await db.findAllUsers();
+  res.json(users);
+}
 module.exports = {
     newUserCreate,
-    logIn
+    logIn,
+    getAllUsers
 };
