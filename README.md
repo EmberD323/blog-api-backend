@@ -1,33 +1,21 @@
 # blog-api-backend
-To build a backend for two different front-ends for accessing and editing blog posts
+This is the backend for two different front-ends for accessing and editing blog posts
 
+- Authors acess website deployed:https://blog-author-website.netlify.app/
+- General access website deployed:https://blog-general-website.netlify.app
 
 ## Features
 
-- User authentication with JWT
+- User authentication
+- CRUD operations
+- API for posts and comments
+
 
 
 ## Tech Stack
 
-- **Backend**: Express.js
-- **Database**: PostgreSQL with Prisma ORM, stored on railway
+- **Framework**:  Node.js with Express
+- **Database**: PostgreSQL with Prisma ORM, stored on railway.
 - **Authentication**: JWT
-- **Session Management**: express-session with @quixo3/prisma-session-store
+- **Validation**: express validation
 - **Password Hashing**: bcryptjs
-
-dotenv process.env.NODE_ENV
-express
-express validator const { body, validationResult } = require("express-validator");
-PostgreSQL
-bcryptjs
-prisma
-jwt
-passport-jwt
-\c
-
-next steps:
-1) how does backend speak to front end? apparently fetch but fetch from where?
-
-onfront end:
-log in storage
-lout out
