@@ -1,4 +1,5 @@
 # blog-api-backend
+
 This is the backend for two different front-ends for accessing and editing blog posts
 
 - Authors acess website deployed:https://blog-author-website.netlify.app/
@@ -9,8 +10,6 @@ This is the backend for two different front-ends for accessing and editing blog 
 - User authentication
 - CRUD operations
 - API for posts and comments
-
-
 
 ## Tech Stack
 
